@@ -12,13 +12,13 @@ start_server() {
     echo "Pornire server pe portul $PORT..."
     (
         while true; do
-            message=$(timeout $TIMEOUT nc -l $PORT)
+            message=$(timeout $TIMEOUT nc -l -p $PORT)    
             if [ $? -eq 124 ]; then
                 echo "Timeout: Niciun mesaj primit în $TIMEOUT secunde. Serverul rămâne activ."
                 continue
             fi
             echo "Mesaj primit: $message"
-            echo "Răspuns trimis la $(date)" | nc -l -w 1 $PORT
+            echo "Răspuns trimis la $(date)" | nc -l -p $PORT -w 1    
         done
     ) &
     SERVER_PID=$!
